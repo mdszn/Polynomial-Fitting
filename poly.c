@@ -2,10 +2,11 @@
 
 #define ARC_LENGTH 800
 
-int main()
+int 
+main()
 {
 		int swidth, sheight = 800;
-    int i,j,k,n,N;
+    int i,j,k,n,N = 0;
     int degree;
     double x[N],y[N];
 		double p[2];
