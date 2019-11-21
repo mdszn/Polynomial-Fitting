@@ -1,27 +1,22 @@
-#include "FPToolkit.c"
 
-#define ARC_LENGTH 800
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <math.h>
 
-int 
-main()
+
+int main()
 {
-		int swidth, sheight = 800;
-    int i,j,k,n,N = 0;
+    int i,j,k,n,N;
+
+    //set precision
+
+    //To find the size of arrays that will store x,y, and z values
     int degree;
-    double x[N],y[N];
-		double p[2];
-
-
-    printf("\nWhat degree of Polynomial do you want to use for the fit?\n");
-    scanf("%d", &n);
-
-		G_init_graphics (swidth, sheight);
-		G_rgb (0.3, 0.3, 0.3);
-		G_clear();
-
     printf("\n\tEnter the no. of data pairs to be entered: ");
     scanf("%d", &N);
 
+    double x[N],y[N];
 
     //Input x-values
     printf("\nEnter the x-axis values:\n");
@@ -38,7 +33,8 @@ main()
     }
 
     // n is the degree of Polynomial
-
+    printf("\nWhat degree of Polynomial do you want to use for the fit?\n");
+    scanf("%d", &n);
 
     // Array that will store the values of sigma(xi),
     // sigma(xi^2),sigma(xi^3)....sigma(xi^2n)
@@ -93,8 +89,19 @@ main()
     // n is made n+1 because the Gaussian Elimination part below was for n equations,
     // but here n is the degree of polynomial and for n degree we get n+1 equations
     n = n + 1;
-	
-		
+
+    printf("\nThe Normal(Augmented Matrix) is as follows:\n");
+    // print the Normal-augmented matrix
+    for (i = 0; i < n; i++)
+    {
+        for (j = 0; j <= n; j++)
+        {
+            printf("%f\t", B[i][j]);
+        }
+
+        printf("\n");
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // From now Gaussian Elimination starts(can be ignored)
     // to solve the set of linear equations (Pivotisation)
@@ -156,14 +163,14 @@ main()
     {
         // Print the values of x^0,x^1,x^2,x^3,....
         //cout << "x^" << i << "=" << a[i] << endl;
-        printf("x^%d = %.17lf\n", i, a[i]);
+        printf("x^%d = %f\n", i, a[i]);
     }
 
     printf("\nHence the fitted Polynomial is given by:\ny = ");
     for (i=0;i<n;i++)
     {
         //cout << " + (" << a[i] << ")" << "x^" << i;
-        printf(" + (%.17lff)x^%d", a[i], i);
+        printf(" + (%f)x^%d", a[i], i);
 
     }
 
