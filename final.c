@@ -112,10 +112,18 @@ main(int argc, char **argv)
 	double A[degree + 1];
 	printMatrix(degree + 1, degree + 2, B);
 	system_solver(degree + 1, degree + 2, B, A);
-	
+		printf("\n");	printf("\n");
 	for(int i = 0; i <= degree; i++){
     printf("%lfx^%d+",A[i],i);
   }	
+	printf("\n");
+	printf("\n");
+  for (int i = degree ; i <= 0 ; i--){
+    printf(" + (%f)x^%d", A[i], i);
+	}
+	printf("\n");
+
+	printf("\n\n%d\n", degree);
 	printf("\n");
 
 	G_rgb(1,0,0);

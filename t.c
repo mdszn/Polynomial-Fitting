@@ -167,7 +167,7 @@ int main()
     }
 
     printf("\nHence the fitted Polynomial is given by:\ny = ");
-    for (i=0;i<n;i++)
+    for (i=n;i<0;i--)
     {
         //cout << " + (" << a[i] << ")" << "x^" << i;
         printf(" + (%f)x^%d", a[i], i);
