@@ -1,54 +1,56 @@
 #include "FPToolkit.c"
 
-
 #define SWIDTH 800
 #define SHEIGHT 800
 #define ARR_LENGTH 800
 
 void 
-printMatrix(int m, int n, double matrix[m][n]){
-    int i,j;
-    for(i=0;i<m;i++){
-        for(j=0;j<n;j++){
-            printf("%lf\t",matrix[i][j]);
-        }
-        printf("\n");
-    } 
+print_matrix(int m, int n, double matrix[m][n]) {
+  
+	for(int i = 0 ; i < m ; i++){
+    for(int j = 0 ; j < n ; j++){
+      printf("%lf\t", matrix[i][j]);
+    }
+    printf("\n");
+  } 
+
 }
 
-void system_solver(int m, int n, double a[m][n], double x[n-1]) {
-    int i,j,k;
-    for(i=0;i<m-1;i++){
-        for(k=i+1;k<m;k++){
-            if(fabs(a[i][i])<fabs(a[k][i])){
-                for(j=0;j<n;j++){                
-                    double temp;
-                    temp=a[i][j];
-                    a[i][j]=a[k][j];
-                    a[k][j]=temp;
-                }
-            }
+void 
+system_solver(int m, int n, double a[m][n], double x[n - 1]) {
+  
+  for(int i = 0 ; i < m - 1 ; i++) {
+    for(int k = i + 1 ; k < m ; k++) {
+      if(fabs(a[i][i]) < fabs(a[k][i])){
+        for(int j = 0 ; j < n ; j++){                
+          double t = a[i][j];
+          a[i][j] = a[k][j];
+          a[k][j] = t;
         }
-        for(k=i+1;k<m;k++){
-            double  term=a[k][i]/ a[i][i];
-            for(j=0;j<n;j++){
-                a[k][j]=a[k][j]-term*a[i][j];
-            }
-        }
+     	}
+  	}
+  
+		for(int k = i + 1 ; k < m ; k++){
+    	double t = a[k][i] / a[i][i];
+    	for(int j = 0 ; j < n ; j++){
+      	a[k][j] = a[k][j] - t * a[i][j];
+    	}
+  	}
+  }
+  
+  for(int i = m - 1 ; i >= 0 ; i--) {
+    x[i] = a[i][n-1];
+    for(int j = i + 1 ; j < n - 1 ; j++){
+      x[i] = x[i] - a[i][j] * x[j];
     }
-    for(i=m-1;i>=0;i--){
-        x[i]=a[i][n-1];
-        for(j=i+1;j<n-1;j++){
-            x[i]=x[i]-a[i][j]*x[j];
-        }
-        x[i]=x[i]/a[i][i];
-    }
+    x[i] = x[i] / a[i][i];
+  }
+
 }
 
 int
 main(int argc, char **argv)
 {
-
 	int degree;
 	int swidth, sheight;
 	int lowleftx, lowlefty, width, height;
@@ -108,34 +110,23 @@ main(int argc, char **argv)
 
 	for(int i = 0; i <= degree; i++)
 		B[i][degree + 1] = Y[i];
-	
+
 	double A[degree + 1];
-	printMatrix(degree + 1, degree + 2, B);
+	print_matrix(degree + 1, degree + 2, B);
 	system_solver(degree + 1, degree + 2, B, A);
-		printf("\n");	printf("\n");
-	for(int i = 0; i <= degree; i++){
-    printf("%lfx^%d+",A[i],i);
-  }	
-	printf("\n");
-	printf("\n");
-  for (int i = degree ; i <= 0 ; i--){
-    printf(" + (%f)x^%d", A[i], i);
+	
+	printf("\nCoefs for system: \n");
+	for(int i = 0; i < degree + 1; i++) {
+		printf("x^%d = %f\n", i, A[i]);
 	}
-	printf("\n");
 
-	printf("\n\n%d\n", degree);
-	printf("\n");
-
-	G_rgb(1,0,0);
-	
-	
-	int key;
-	key = G_wait_key();
-
+	printf("\nFitted Polynomial : \ny = ");
+	for (int i = degree; i >= 0; i--)
+		printf(" + (%f)x^%d", A[i], i);
+	/*for(int i = 0; i < degree + 1; i++) {
+		printf(" + (%f)x^%d", A[i], i);
+	}*/
 		
-
-
-	
-
+	printf("\n");
 
 }
