@@ -6,19 +6,16 @@
 
 void 
 print_matrix(int m, int n, double matrix[m][n]) {
-  
 	for(int i = 0 ; i < m ; i++){
     for(int j = 0 ; j < n ; j++){
       printf("%lf\t", matrix[i][j]);
     }
     printf("\n");
   } 
-
 }
 
 void 
 system_solver(int m, int n, double a[m][n], double x[n - 1]) {
-  
   for(int i = 0 ; i < m - 1 ; i++) {
     for(int k = i + 1 ; k < m ; k++) {
       if(fabs(a[i][i]) < fabs(a[k][i])){
@@ -30,9 +27,9 @@ system_solver(int m, int n, double a[m][n], double x[n - 1]) {
      	}
   	}
   
-		for(int k = i + 1 ; k < m ; k++){
+    for(int k = i + 1 ; k < m ; k++){
     	double t = a[k][i] / a[i][i];
-    	for(int j = 0 ; j < n ; j++){
+      for(int j = 0 ; j < n ; j++){
       	a[k][j] = a[k][j] - t * a[i][j];
     	}
   	}
@@ -45,7 +42,20 @@ system_solver(int m, int n, double a[m][n], double x[n - 1]) {
     }
     x[i] = x[i] / a[i][i];
   }
+}
 
+double
+poly(double a[], int deg, float x) {
+	float p;
+	int i;
+	p = a[deg];
+	
+	for(i=deg;i>=1;i--)
+	{
+		p = (a[i-1] + x*p);
+	}
+	
+	return p;
 }
 
 int
@@ -57,6 +67,7 @@ main(int argc, char **argv)
 	int n = 0;
 	double p[2]; //POINTS
 	double x[ARR_LENGTH], y[ARR_LENGTH]; //X-CORD AND Y-CORD
+	double X_CORD, Y_CORD;
 
 	printf("Enter Degree of Polynomial: ");
 	scanf("%d", &degree);
@@ -84,7 +95,7 @@ main(int argc, char **argv)
 	for(int i = 0; i < n; i++)
 		printf(" %f , %f\n", x[i], y[i]);
 
-	double X[2*degree+1];
+	double X[2 * degree + 1];
 	for(int i = 0; i <= 2 * degree; i++) {
 		X[i] = 0;
 		for(int j = 0; j < n; j++) {
@@ -115,18 +126,29 @@ main(int argc, char **argv)
 	print_matrix(degree + 1, degree + 2, B);
 	system_solver(degree + 1, degree + 2, B, A);
 	
-	printf("\nCoefs for system: \n");
+  printf("\nCoefs for system: \n");
 	for(int i = 0; i < degree + 1; i++) {
-		printf("x^%d = %f\n", i, A[i]);
+		printf("x^%d = %.10lf\n", i, A[i]);
 	}
 
 	printf("\nFitted Polynomial : \ny = ");
-	for (int i = degree; i >= 0; i--)
-		printf(" + (%f)x^%d", A[i], i);
-	/*for(int i = 0; i < degree + 1; i++) {
-		printf(" + (%f)x^%d", A[i], i);
-	}*/
+	for (int i = degree; i >= 0; i--) {
+		printf(" + (%.17lf)x^%d", A[i], i);
+	}
 		
 	printf("\n");
 
+	G_rgb(1,0,0);
+	
+	for (X_CORD = 0; X_CORD < 750; X_CORD += 0.1) {
+		Y_CORD = poly(A, degree, X_CORD);
+		G_point(X_CORD, Y_CORD);
+	}	
+
+
+	
+
+
+
+	G_wait_key();
 }
