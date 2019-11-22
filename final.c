@@ -123,18 +123,18 @@ main(int argc, char **argv)
 		B[i][degree + 1] = Y[i];
 
 	double A[degree + 1];
-	print_matrix(degree + 1, degree + 2, B);
+	//print_matrix(degree + 1, degree + 2, B);
 	system_solver(degree + 1, degree + 2, B, A);
 	
-  printf("\nCoefs for system: \n");
+  /*printf("\nCoefs for system: \n");
 	for(int i = 0; i < degree + 1; i++) {
 		printf("x^%d = %.10lf\n", i, A[i]);
-	}
+	}*/
 
-	printf("\nFitted Polynomial : \ny = ");
+	/*printf("\nFitted Polynomial : \ny = ");
 	for (int i = degree; i >= 0; i--) {
 		printf(" + (%.17lf)x^%d", A[i], i);
-	}
+	}*/
 		
 	printf("\n");
 
