@@ -5,17 +5,8 @@
 #define ARR_LENGTH 800
 
 void 
-print_matrix(int m, int n, double matrix[m][n]) {
-	for(int i = 0 ; i < m ; i++){
-    for(int j = 0 ; j < n ; j++){
-      printf("%lf\t", matrix[i][j]);
-    }
-    printf("\n");
-  } 
-}
-
-void 
-system_solver(int m, int n, double a[m][n], double x[n - 1]) {
+system_solver(int m, int n, double a[m][n], double x[n - 1]) 
+{
   for(int i = 0 ; i < m - 1 ; i++) {
     for(int k = i + 1 ; k < m ; k++) {
       if(fabs(a[i][i]) < fabs(a[k][i])){
@@ -45,16 +36,15 @@ system_solver(int m, int n, double a[m][n], double x[n - 1]) {
 }
 
 double
-poly(double a[], int deg, float x) {
+poly_solver(double A[], int degree, float X_CORD) 
+{
 	float p;
-	int i;
-	p = a[deg];
 	
-	for(i=deg;i>=1;i--)
-	{
-		p = (a[i-1] + x*p);
+	p = A[degree];
+	
+	for(int i = degree ; i >= 1 ; i--) {
+		p = (A[i - 1] + X_CORD * p);
 	}
-	
 	return p;
 }
 
@@ -67,7 +57,7 @@ main(int argc, char **argv)
 	int n = 0;
 	double p[2]; //POINTS
 	double x[ARR_LENGTH], y[ARR_LENGTH]; //X-CORD AND Y-CORD
-	double X_CORD, Y_CORD;
+	double X_CORD, Y_CORD; //USED FOR SCREEN INPUT WHEN SOLVING POLYNOMIAL
 
 	printf("Enter Degree of Polynomial: ");
 	scanf("%d", &degree);
@@ -123,31 +113,20 @@ main(int argc, char **argv)
 		B[i][degree + 1] = Y[i];
 
 	double A[degree + 1];
-	//print_matrix(degree + 1, degree + 2, B);
 	system_solver(degree + 1, degree + 2, B, A);
-	
-  /*printf("\nCoefs for system: \n");
-	for(int i = 0; i < degree + 1; i++) {
-		printf("x^%d = %.10lf\n", i, A[i]);
-	}*/
-
-	/*printf("\nFitted Polynomial : \ny = ");
+	printf("\nFitted Polynomial : \ny = ");
 	for (int i = degree; i >= 0; i--) {
 		printf(" + (%.17lf)x^%d", A[i], i);
-	}*/
+	}
 		
 	printf("\n");
 
 	G_rgb(1,0,0);
 	
-	for (X_CORD = 0; X_CORD < 750; X_CORD += 0.1) {
-		Y_CORD = poly(A, degree, X_CORD);
+	for (X_CORD = 0; X_CORD < 750; X_CORD += 0.0001) {
+		Y_CORD = poly_solver(A, degree, X_CORD);
 		G_point(X_CORD, Y_CORD);
 	}	
-
-
-	
-
 
 
 	G_wait_key();
