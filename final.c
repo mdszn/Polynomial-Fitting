@@ -39,7 +39,6 @@ double
 poly_solver(double A[], int degree, float X_CORD) 
 {
 	float p;
-	
 	p = A[degree];
 	
 	for(int i = degree ; i >= 1 ; i--) {
@@ -123,7 +122,7 @@ main(int argc, char **argv)
 
 	G_rgb(1,0,0);
 	
-	for (X_CORD = 0; X_CORD < 750; X_CORD += 0.0001) {
+	for (X_CORD = 0; X_CORD < 750; X_CORD += 0.01) {
 		Y_CORD = poly_solver(A, degree, X_CORD);
 		G_point(X_CORD, Y_CORD);
 	}	
