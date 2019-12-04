@@ -1,3 +1,10 @@
+
+/*
+Mirko Draganic
+Final Project 
+CS451 Numerical Computation
+*/
+
 #include "FPToolkit.c"
 
 #define SWIDTH 800
@@ -60,16 +67,15 @@ main(int argc, char **argv)
 
 	printf("Enter Degree of Polynomial: ");
 	scanf("%d", &degree);
-	printf("\n");
 	
 	G_init_graphics (SWIDTH, SHEIGHT);
 	G_rgb (0.3, 0.3, 0.3);
 	G_clear ();
 
-	G_rgb(0.0, 0.0, 0.0);
+	G_rgb(0.0, 0.0, 1.0);
 	lowleftx = 700; lowlefty = 0; width = 100; height = 800;
 	G_fill_rectangle(lowleftx, lowlefty, width, height);
-	G_rgb(1, 1, 0);
+	G_rgb(0, 1, 0);
 
 	for(int i = 0; i < ARR_LENGTH; ++i) {
 		G_wait_click(p);
@@ -81,8 +87,6 @@ main(int argc, char **argv)
 		++n;
 	}
 	
-	for(int i = 0; i < n; i++)
-		printf(" %f , %f\n", x[i], y[i]);
 
 	double X[2 * degree + 1];
 	for(int i = 0; i <= 2 * degree; i++) {
@@ -113,13 +117,6 @@ main(int argc, char **argv)
 
 	double A[degree + 1];
 	system_solver(degree + 1, degree + 2, B, A);
-	printf("\nFitted Polynomial : \ny = ");
-	for (int i = degree; i >= 0; i--) {
-		printf(" + (%.17lf)x^%d", A[i], i);
-	}
-		
-	printf("\n");
-
 	G_rgb(1,0,0);
 	
 	for (X_CORD = 0; X_CORD < 750; X_CORD += 0.01) {
